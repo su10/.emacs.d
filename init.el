@@ -1,9 +1,33 @@
-;;; -*- mode: emacs-lisp; coding: utf-8-emacs-unix; indent-tabs-mode: nil -*-
-
 (setq user-full-name "su10")
-(setq user-mail-address "okkotonushi_sama@yahoo.co.jp")
+(setq user-mail-address "su10.hatena@gmail.com")
 
-;; commandキーをMetaキーに割り当て(参考:http://weblog.nekonya.com/2010/11/cocoa-emacs-command-meta.html)
+;; load-path を追加する関数を定義
+(defun add-to-load-path (&rest paths)
+  (let (path)
+    (dolist (path paths paths)
+      (let ((default-directory
+              (expand-file-name (concat user-emacs-directory path))))
+        (add-to-list 'load-path default-directory)
+        (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
+            (normal-top-level-add-subdirs-to-load-path))))))
+
+;; Emacs Lisp のPathを通す
+(add-to-load-path "elisp"
+                  "conf"
+                  "public_repos")
+;; 表示テーマの設定
+(when (require 'color-theme nil t)
+  (color-theme-initialize)
+  (color-theme-hober))
+
+;; 文字コード
+(set-language-environment 'Japanese)
+;(set-language-environment  'utf-8)
+(prefer-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8-unix)
+
+;; commandキーをMetaキーに割り当て
+;; (参考:http://weblog.nekonya.com/2010/11/cocoa-emacs-command-meta.html)
 (cond
  ((string-match "apple-darwin" system-configuration)
   (setq ns-command-modifier (quote meta))
@@ -36,38 +60,51 @@
 (setq frame-title-format "%f")
 ;; バックアップとオートセーブファイルを~/.emacs.d/backupsへ集める
 (add-to-list 'backup-directory-alist
-             (cons "." "~/.emacs.d/buckups"))
+             (cons "." "~/.emacs.d/backups"))
 (setq auto-save-file-name-transforms
       `((".*" ,(expand-file-name "~/.emacs.d/backups/") t)))
 
-;; 常時デバッグ状態
-;(setq debug-on-error t)
-
-;; load-path を追加する関数を定義
-(defun add-to-load-path (&rest paths)
-  (let (path)
-    (dolist (path paths paths)
-      (let ((default-directory
-              (expand-file-name (concat user-emacs-directory path))))
-        (add-to-list 'load-path default-directory)
-        (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
-            (normal-top-level-add-subdirs-to-load-path))))))
-
-;; Emacs Lisp のPathを通す
-(add-to-load-path "elisp"
-                  "conf"
-                  "public_repos")
-;; 表示テーマの設定
-(when (require 'color-theme nil t)
-  (color-theme-initialize)
-  (color-theme-hober))
-
-;; 文字コード
-(set-language-environment 'Japanese)
-;(set-language-environment  'utf-8)
-(prefer-coding-system 'utf-8)
-(set-default-coding-systems 'utf-8-unix)
-
+;; メニューバーを消す
+(menu-bar-mode 0)
+;; ツールバーを消す
+(tool-bar-mode 0)
+;; 対応する括弧を光らせる
+(show-paren-mode t)
+;; ウィンドウ内に収まりきらないときだけ括弧内も光らせる
+(setq show-paren-style 'mixed)
+;; 現在行を目立たせる
+(global-hl-line-mode)
+;; 行の先頭でC-kを一回押すだけで行全体を消去する
+(setq kill-whole-line t)
+;; 最終行に必ず一行挿入する
+(setq require-final-newline t)
+;; バッファの最後でnewlineで新規行を追加するのを禁止する
+(setq next-line-add-newlines nil)
+;; 終了時にオートセーブファイルを消す
+(setq delete-auto-save-files t)
+;; 補完時に大文字小文字を区別しない
+(setq completion-ignore-case t)
+(setq read-file-name-comletion-ignore-case t)
+;; 補完可能なものを随時表示
+(icomplete-mode t)
+;; 履歴を大きくする
+(setq history-length 10000)
+;; ミニバッファの履歴を保存する
+(savehist-mode t)
+;; 最近開いたファイルを保存する数を増やす
+(setq recentf-max-saved-items 10000)
+;; ファイルの先頭に#!...があるファイルを保存するとき実行権を付与
+(add-hook 'after-save-hook
+          'executable-make-buffer-file-executable-if-script-p)
+;; 自動でスペルチェック
+(setq-default flyspell-mode t)
+(setq ispell-dictionary "american")
+;; スクロールを一行ずつにする
+(setq scroll-step 1)
+;; スクロールバーを右側に表示する
+(set-scroll-bar-mode 'right)
+;; emacs -nw で起動した時にメニューバーを消す
+(if window-system (menu-bar-mode t) (menu-bar-mode 0))
 
 ;; 
 ;;(require 'init_global)
