@@ -73,7 +73,22 @@
 ;; ウィンドウ内に収まりきらないときだけ括弧内も光らせる
 (setq show-paren-style 'mixed)
 ;; 現在行を目立たせる
-(global-hl-line-mode)
+(defface hlline-face
+  '((((class color)
+      (background dark))
+     (:background "gray13"))
+    (((class color)
+      (background light))
+     (:background "#CC0066"))
+    (t
+     ()))
+  "*Face used by hl-line.")
+(setq hl-line-face 'hlline-face)
+(global-hl-line-mode t)
+(require 'col-highlight)
+(column-highlight-mode 1)
+(custom-set-faces
+ '(col-highlight ((t (:background "gray13")))))
 ;; 行の先頭でC-kを一回押すだけで行全体を消去する
 (setq kill-whole-line t)
 ;; 最終行に必ず一行挿入する
@@ -90,7 +105,7 @@
 ;; 履歴を大きくする
 (setq history-length 10000)
 ;; ミニバッファの履歴を保存する
-(savehist-mode t)
+;(savehist-mode t)
 ;; 最近開いたファイルを保存する数を増やす
 (setq recentf-max-saved-items 10000)
 ;; ファイルの先頭に#!...があるファイルを保存するとき実行権を付与
@@ -103,16 +118,10 @@
 (setq scroll-step 1)
 ;; スクロールバーを右側に表示する
 (set-scroll-bar-mode 'right)
-;; emacs -nw で起動した時にメニューバーを消す
-(if window-system (menu-bar-mode t) (menu-bar-mode 0))
 
-;; 
+
+
+
 ;;(require 'init_global)
 ;;(require 'init_key)
 ;;(require 'init_common)
-;; 環境依存設定
-;;(cond
-;; (mac-p (require 'init_cocoa_main))
- ;(carbon-p (require 'init_carbon_main))
- ;(ns-p (require 'init_ntemacs_main))
-;; )
