@@ -1,6 +1,17 @@
 (setq user-full-name "su10")
 (setq user-mail-address "su10.hatena@gmail.com")
 
+;====================================
+;フレーム位置設定(ウィンドウ） 
+;====================================
+(setq initial-frame-alist
+      (append
+       '((top . 0)    ; フレームの Y 位置(ピクセル数)
+     (left . 0)    ; フレームの X 位置(ピクセル数)
+   (width . 197)    ; フレーム幅(文字数)
+    (height . 60)   ; フレーム高(文字数)
+    ) initial-frame-alist))
+
 ;; load-path を追加する関数を定義
 (defun add-to-load-path (&rest paths)
   (let (path)
@@ -118,8 +129,9 @@
 (setq scroll-step 1)
 ;; スクロールバーを右側に表示する
 (set-scroll-bar-mode 'right)
-
-
+;;長い行を折り返さない
+(setq-default truncate-lines t)
+(setq-default truncate-partical-width-windows t)
 
 
 ;;(require 'init_global)
