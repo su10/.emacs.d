@@ -38,12 +38,6 @@
   ;; install-elispの関数を利用可能にする
   (auto-install-compatibility-setup))
 
-;; redo+.elの設定
-(when (require 'redo+ nil t)
-  ;; C-.にリドゥを割り当てる
-  (global-set-key (kbd "C-.") 'redo)
-  )
-
 ;; 表示テーマの設定
 (when (require 'color-theme nil t)
   (color-theme-initialize)
