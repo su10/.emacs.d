@@ -71,14 +71,6 @@
 (global-set-key (kbd "C-m") 'newline-and-indent)
 ;; C-tでウィンドウ切り替え
 (global-set-key (kbd "C-t") 'other-window)
-;; C-c-fで新しいフレーム開く
-(global-set-key (kbd "C-c C-f") 'make-frame-command)
-;; C-c-tでフレーム切り替え
-(global-set-key (kbd "C-c C-t") 'other-frame)
-;; C-x-cを「Emacs終了」から「フレーム閉じる」に割り当て
-(global-set-key (kbd "C-x C-c") 'delete-frame)
-;; C-c-cをEmacs終了に割り当て
-(global-set-key (kbd "C-c C-c") 'save-buffers-kill-emacs)
 ;; タブキーで半角スペース２つ入力
 (setq-default indent-tabs-mode nil tab-width 2)
 ;; カラム番号を表示
