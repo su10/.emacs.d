@@ -146,6 +146,10 @@
 (setq-default truncate-partical-width-windows t)
 
 
+;;; 矩形選択
+(cua-mode t)
+(setq cua-enable-cua-keys nil) ; そのままだと C-x が切り取りになってしまったりするので無効化
+
 ;;(require 'init_global)
 ;;(require 'init_key)
 ;;(require 'init_common)
